@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人资料 - STEAM风格游戏平台</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/steam-style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+  <div class="steam-container">
+    <!-- 顶部导航栏 -->
+    <header class="steam-header">
+      <div class="header-content">
+        <div class="logo">STEAM游戏平台</div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="{{ url_for('index') }}">商店</a></li>
+            <li><a href="#">社区</a></li>
+            <li><a href="#">关于</a></li>
+            <li><a href="#">支持</a></li>
+          </ul>
+        </nav>
+        <div class="user-actions">
+          <a href="{{ url_for('logout') }}" class="login-btn">登出</a>
+          <span class="language">语言</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 消息提示 -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for message in messages %}
+            <div class="flash-message">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- 主要内容区域 -->
+    <div class="profile-content">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <img src="{{ url_for('static', filename=user.avatar if user.avatar.startswith('uploads/') else 'images/' + user.avatar) }}" alt="{{ user.username }}">
+        </div>
+        <div class="profile-info">
+          <h1>{{ user.username }}</h1>
+          <p class="profile-email">{{ user.email }}</p>
+          <p class="profile-date">注册于: {{ user.created_at.strftime('%Y-%m-%d') }}</p>
+          <a href="{{ url_for('edit_profile') }}" class="edit-profile-btn">编辑个人资料</a>
+        </div>
+      </div>
+      
+      <div class="profile-body">
+        <div class="profile-section">
+          <h2>个人简介</h2>
+          <div class="profile-bio">
+            <p>{{ user.bio }}</p>
+          </div>
+        </div>
+        
+        <div class="profile-section">
+          <h2>我的评测</h2>
+          <div class="profile-reviews">
+            {% if user.comments %}
+              {% for comment in user.comments %}
+                <div class="review-item">
+                  <div class="review-header">
+                    <div class="review-game">
+                      <h3>打砖块</h3>
+                      <span class="review-date">发布于: {{ comment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</span>
+                    </div>
+                    <div class="review-rating {{ 'positive' if comment.rating >= 3 else 'negative' }}">
+                      {{ '推荐' if comment.rating >= 3 else '不推荐' }}
+                    </div>
+                  </div>
+                  <div class="review-content">
+                    <p>{{ comment.content }}</p>
+                  </div>
+                  <div class="review-stats">
+                    <span class="review-rating-score">评分: {{ comment.rating }}/5</span>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p class="no-reviews">您还没有发表过评测</p>
+            {% endif %}
+          </div>
+        </div>
+        
+        <div class="profile-section">
+          <h2>游戏统计</h2>
+          <div class="profile-stats">
+            <div class="stat-item">
+              <span class="stat-label">评测数量</span>
+              <span class="stat-value">{{ user.comments|length }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">平均评分</span>
+              <span class="stat-value">
+                {% if user.comments %}
+                  {{ "%.1f"|format(user.comments|map(attribute='rating')|sum / user.comments|length) }}
+                {% else %}
+                  -
+                {% endif %}
+              </span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">账号年龄</span>
+              <span class="stat-value">{{ ((now - user.created_at).days / 365.25)|round|int }} 年</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="steam-footer">
+      <div class="footer-content">
+        <div class="footer-logo">STEAM游戏平台</div>
+        <div class="footer-legal">
+          <p>© 2023 Valve Corporation. 保留所有权利。所有商标均为其在美国及其它国家/地区的各自持有者所有。</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

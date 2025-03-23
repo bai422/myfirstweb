@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="{{ 'en' if language == 'en' else 'zh-CN' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ 'Vapor Gaming Platform' if language == 'en' else '蒸汽游戏平台' }}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/steam-style.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  <div class="steam-container">
+    <!-- 顶部导航栏 -->
+    <header class="steam-header">
+      <div class="header-content">
+        <div class="logo">{{ 'Vapor Gaming Platform' if language == 'en' else '蒸汽游戏平台' }}</div>
+        <nav class="main-nav">
+          <ul>
+            <li class="{{ 'active' if request.path == url_for('index') else '' }}"><a href="{{ url_for('index') }}">{{ 'Store' if language == 'en' else '商店' }}</a></li>
+            <li class="{{ 'active' if request.path == url_for('community') else '' }}"><a href="{{ url_for('community') }}">{{ 'Community' if language == 'en' else '社区' }}</a></li>
+            <li><a href="#">{{ 'About' if language == 'en' else '关于' }}</a></li>
+            <li><a href="#">{{ 'Support' if language == 'en' else '支持' }}</a></li>
+          </ul>
+        </nav>
+        <div class="user-actions">
+          {% if 'user_id' in session %}
+            <a href="{{ url_for('profile') }}" class="login-btn">{{ 'Profile' if language == 'en' else '个人资料' }}</a>
+            <a href="{{ url_for('logout') }}" class="login-btn">{{ 'Logout' if language == 'en' else '登出' }}</a>
+          {% else %}
+            <a href="#" class="install-btn">{{ 'Install Vapor' if language == 'en' else '安装 蒸汽' }}</a>
+            <a href="{{ url_for('login') }}" class="login-btn">{{ 'Login' if language == 'en' else '登录' }}</a>
+            <a href="{{ url_for('register') }}" class="login-btn">{{ 'Register' if language == 'en' else '注册' }}</a>
+          {% endif %}
+          <div class="language-selector">
+            <span class="current-language">{{ 'Language' if language == 'en' else '语言' }}</span>
+            <div class="language-dropdown">
+              <a href="{{ url_for('set_language', language='zh') }}" class="language-option {% if language == 'zh' %}active{% endif %}">中文</a>
+              <a href="{{ url_for('set_language', language='en') }}" class="language-option {% if language == 'en' %}active{% endif %}">English</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 消息提示 -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for message in messages %}
+            <div class="flash-message">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="steam-footer">
+      <div class="footer-content">
+        <div class="footer-logo">{{ 'Vapor Gaming Platform' if language == 'en' else '蒸汽游戏平台' }}</div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>{{ 'About' if language == 'en' else '关于' }}</h4>
+            <ul>
+              <li><a href="#">{{ 'About Vapor' if language == 'en' else '关于 蒸汽' }}</a></li>
+              <li><a href="#">{{ 'Contact Us' if language == 'en' else '联系我们' }}</a></li>
+              <li><a href="#">{{ 'Jobs' if language == 'en' else '工作机会' }}</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>{{ 'Store' if language == 'en' else '商店' }}</h4>
+            <ul>
+              <li><a href="#">{{ 'Home' if language == 'en' else '主页' }}</a></li>
+              <li><a href="#">{{ 'Discovery Queue' if language == 'en' else '发现队列' }}</a></li>
+              <li><a href="#">{{ 'Wishlist' if language == 'en' else '愿望单' }}</a></li>
+              <li><a href="#">{{ 'Points Shop' if language == 'en' else '点数商店' }}</a></li>
+              <li><a href="#">{{ 'News' if language == 'en' else '新闻' }}</a></li>
+              <li><a href="#">{{ 'Stats' if language == 'en' else '统计数据' }}</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>{{ 'Community' if language == 'en' else '社区' }}</h4>
+            <ul>
+              <li><a href="{{ url_for('community') }}">{{ 'Home' if language == 'en' else '主页' }}</a></li>
+              <li><a href="#">{{ 'Discussions' if language == 'en' else '讨论' }}</a></li>
+              <li><a href="#">{{ 'Workshop' if language == 'en' else '创意工坊' }}</a></li>
+              <li><a href="#">{{ 'Market' if language == 'en' else '市场' }}</a></li>
+              <li><a href="#">{{ 'Broadcasts' if language == 'en' else '实况直播' }}</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-legal">
+          <p>© 2023 {{ 'Vapor Corporation. All rights reserved.' if language == 'en' else '蒸汽公司。保留所有权利。' }}{{ ' All trademarks are property of their respective owners in the US and other countries.' if language == 'en' else '所有商标均为其在美国及其它国家/地区的各自持有者所有。' }}</p>
+          <div class="legal-links">
+            <a href="#">{{ 'Privacy Policy' if language == 'en' else '隐私政策' }}</a> | 
+            <a href="#">{{ 'Legal Information' if language == 'en' else '法律信息' }}</a> | 
+            <a href="#">{{ 'Vapor Subscriber Agreement' if language == 'en' else '蒸汽订户协议' }}</a> | 
+            <a href="#">{{ 'Refunds' if language == 'en' else '退款' }}</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

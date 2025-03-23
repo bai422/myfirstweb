@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Plants vs Zombies - Vapor Gaming Platform' if language == 'en' else '植物大战僵尸 - 蒸汽游戏平台' }}{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .game-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .back-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+</style>
+
+<div class="game-container">
+  <a href="{{ url_for('index') }}" class="back-button">{{ 'Back to Home' if language == 'en' else '返回首页' }}</a>
+  <iframe src="{{ url_for('static', filename='plants_vs_zombies/index.html') }}" allowfullscreen></iframe>
+</div>
+{% endblock %} 

@@ -1,0 +1,482 @@
+/* STEAM风格CSS */
+:root {
+  --steam-bg-dark: #1b2838;
+  --steam-bg-darker: #171a21;
+  --steam-bg-light: #2a475e;
+  --steam-text: #c7d5e0;
+  --steam-text-light: #ffffff;
+  --steam-text-dim: #8f98a0;
+  --steam-accent: #66c0f4;
+  --steam-accent-hover: #1999ff;
+  --steam-green: #5c7e10;
+  --steam-green-hover: #7fad1c;
+  --steam-border: #2a3f5a;
+  --steam-highlight: rgba(102, 192, 244, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
+  background-color: var(--steam-bg-dark);
+  color: var(--steam-text);
+  line-height: 1.5;
+}
+
+a {
+  color: var(--steam-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--steam-accent-hover);
+}
+
+ul {
+  list-style: none;
+}
+
+/* 容器 */
+.steam-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 头部导航 */
+.steam-header {
+  background-color: var(--steam-bg-darker);
+  padding: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.logo {
+  color: var(--steam-text-light);
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.main-nav ul {
+  display: flex;
+  gap: 20px;
+}
+
+.main-nav li a {
+  color: var(--steam-text);
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 8px 0;
+  position: relative;
+}
+
+.main-nav li.active a,
+.main-nav li a:hover {
+  color: var(--steam-text-light);
+}
+
+.main-nav li.active a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--steam-accent);
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.install-btn {
+  background-color: var(--steam-green);
+  color: var(--steam-text-light);
+  padding: 5px 10px;
+  border-radius: 2px;
+  font-size: 12px;
+}
+
+.install-btn:hover {
+  background-color: var(--steam-green-hover);
+  color: var(--steam-text-light);
+}
+
+.login-btn {
+  color: var(--steam-text);
+  font-size: 12px;
+}
+
+.language {
+  color: var(--steam-text-dim);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* 主要内容区域 */
+.main-content {
+  display: flex;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+  flex: 1;
+}
+
+/* 侧边栏 */
+.sidebar {
+  width: 250px;
+  padding-right: 20px;
+}
+
+.search-box {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 8px 10px;
+  background-color: var(--steam-bg-light);
+  border: 1px solid var(--steam-border);
+  color: var(--steam-text);
+  border-radius: 3px 0 0 3px;
+}
+
+.search-box button {
+  background-color: var(--steam-accent);
+  color: var(--steam-text-light);
+  border: none;
+  padding: 0 10px;
+  cursor: pointer;
+  border-radius: 0 3px 3px 0;
+}
+
+.search-box button:hover {
+  background-color: var(--steam-accent-hover);
+}
+
+.categories {
+  margin-bottom: 25px;
+}
+
+.categories h3 {
+  color: var(--steam-text-dim);
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--steam-border);
+}
+
+.categories ul li {
+  margin-bottom: 5px;
+}
+
+.categories ul li a {
+  color: var(--steam-text);
+  font-size: 14px;
+  display: block;
+  padding: 5px 0;
+}
+
+.categories ul li.active a {
+  color: var(--steam-accent);
+}
+
+.categories ul li a:hover {
+  color: var(--steam-text-light);
+}
+
+/* 游戏内容区域 */
+.game-content {
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  padding: 20px;
+}
+
+.game-header {
+  margin-bottom: 20px;
+}
+
+.game-header h1 {
+  font-size: 26px;
+  color: var(--steam-text-light);
+  margin-bottom: 10px;
+}
+
+.game-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 14px;
+  color: var(--steam-text-dim);
+}
+
+.tags {
+  display: flex;
+  gap: 5px;
+}
+
+.tag {
+  background-color: var(--steam-bg-light);
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-size: 12px;
+}
+
+.game-showcase {
+  margin-bottom: 30px;
+}
+
+.game-container {
+  width: 100%;
+  height: 600px;
+  background-color: #000;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+#game-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.game-description {
+  margin-bottom: 30px;
+}
+
+.game-description h2 {
+  font-size: 20px;
+  color: var(--steam-text-light);
+  margin-bottom: 15px;
+}
+
+.game-description h3 {
+  font-size: 16px;
+  color: var(--steam-text-light);
+  margin: 20px 0 10px;
+}
+
+.game-description p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.game-description ul {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.game-description ul li {
+  list-style-type: disc;
+  margin-bottom: 5px;
+}
+
+/* 评测区域 */
+.game-reviews h2 {
+  font-size: 20px;
+  color: var(--steam-text-light);
+  margin-bottom: 15px;
+}
+
+.review-summary {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.review-score {
+  color: #66CC33;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.review-count {
+  color: var(--steam-text-dim);
+  font-size: 14px;
+}
+
+.review-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.review-info {
+  flex: 1;
+}
+
+.username {
+  font-weight: bold;
+  color: var(--steam-text-light);
+}
+
+.review-stats {
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  color: var(--steam-text-dim);
+}
+
+.review-rating {
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.review-rating.positive {
+  background-color: #66CC33;
+  color: white;
+}
+
+.review-rating.negative {
+  background-color: #CC3333;
+  color: white;
+}
+
+.review-content {
+  line-height: 1.6;
+}
+
+/* 页脚 */
+.steam-footer {
+  background-color: var(--steam-bg-darker);
+  padding: 40px 0;
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-logo {
+  color: var(--steam-text-light);
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.footer-column h4 {
+  color: var(--steam-text-light);
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.footer-column ul li {
+  margin-bottom: 8px;
+}
+
+.footer-column ul li a {
+  color: var(--steam-text-dim);
+  font-size: 14px;
+}
+
+.footer-column ul li a:hover {
+  color: var(--steam-text);
+}
+
+.footer-legal {
+  color: var(--steam-text-dim);
+  font-size: 12px;
+  border-top: 1px solid var(--steam-border);
+  padding-top: 20px;
+}
+
+.legal-links {
+  margin-top: 10px;
+}
+
+.legal-links a {
+  color: var(--steam-text-dim);
+}
+
+.legal-links a:hover {
+  color: var(--steam-text);
+}
+
+/* 响应式设计 */
+@media (max-width: 900px) {
+  .main-content {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+  
+  .game-container {
+    height: 500px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .main-nav ul {
+    gap: 10px;
+  }
+  
+  .game-container {
+    height: 400px;
+  }
+  
+  .footer-links {
+    gap: 20px;
+  }
+  
+  .footer-column {
+    width: 45%;
+  }
+}

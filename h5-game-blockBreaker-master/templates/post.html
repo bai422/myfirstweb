@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - {{ 'Vapor Gaming Platform' if language == 'en' else '蒸汽游戏平台' }}{% endblock %}
+
+{% block content %}
+<div class="post-container">
+  <div class="post-header">
+    <h1>{{ post.title }}</h1>
+    <div class="post-meta">
+      <span class="post-author">{{ 'By' if language == 'en' else '作者:' }} {{ post.author.username }}</span>
+      <span class="post-date">{{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+    </div>
+  </div>
+  
+  <div class="post-content">
+    {{ post.content|safe }}
+  </div>
+  
+  <div class="replies-section">
+    <h2>{{ 'Replies' if language == 'en' else '回复' }} ({{ replies|length }})</h2>
+    
+    {% if replies %}
+      {% for reply in replies %}
+        <div class="reply-item">
+          <div class="reply-header">
+            <img src="{{ url_for('static', filename=reply.author.avatar if reply.author.avatar.startswith('uploads/') else 'images/' + reply.author.avatar) }}" alt="{{ reply.author.username }}" class="avatar">
+            <div class="reply-info">
+              <div class="username">{{ reply.author.username }}</div>
+              <div class="reply-date">{{ reply.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+            </div>
+          </div>
+          <div class="reply-content">
+            {{ reply.content|safe }}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="no-replies">
+        <p>{{ 'No replies yet. Be the first to reply!' if language == 'en' else '还没有回复。成为第一个回复的人吧！' }}</p>
+      </div>
+    {% endif %}
+    
+    {% if 'user_id' in session %}
+      <div class="add-reply">
+        <h3>{{ 'Add a Reply' if language == 'en' else '添加回复' }}</h3>
+        <form action="{{ url_for('add_reply', post_id=post.id) }}" method="post">
+          <div class="form-group">
+            <textarea name="content" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">{{ 'Post Reply' if language == 'en' else '发布回复' }}</button>
+        </form>
+      </div>
+    {% else %}
+      <div class="login-to-reply">
+        <p>{{ 'Please ' if language == 'en' else '请' }}<a href="{{ url_for('login') }}">{{ 'login' if language == 'en' else '登录' }}</a>{{ ' to reply' if language == 'en' else '后回复' }}</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

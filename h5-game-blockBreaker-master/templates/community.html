@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Community - Vapor Gaming Platform' if language == 'en' else '社区 - 蒸汽游戏平台' }}{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .community-container {
+    max-width: 90%;
+    width: 90%;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #1b2838;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .community-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #2a475e;
+  }
+  
+  .community-header h1 {
+    font-size: 32px;
+    margin: 0;
+    color: #c7d5e0;
+  }
+  
+  .create-post-btn {
+    background-color: #66c0f4;
+    color: #fff;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .create-post-btn:hover {
+    background-color: #1999ff;
+  }
+  
+  .posts-list {
+    width: 100%;
+  }
+  
+  .post-item {
+    background-color: #2a3f5a;
+    border-radius: 5px;
+    padding: 25px;
+    margin-bottom: 25px;
+    transition: transform 0.2s;
+    border: 1px solid #2a475e;
+  }
+  
+  .post-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+  
+  .post-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+  }
+  
+  .post-title a {
+    color: #66c0f4;
+    text-decoration: none;
+  }
+  
+  .post-title a:hover {
+    text-decoration: underline;
+  }
+  
+  .post-meta {
+    display: flex;
+    gap: 20px;
+    color: #8f98a0;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  .post-preview {
+    color: #c7d5e0;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  
+  .no-posts {
+    text-align: center;
+    padding: 50px;
+    color: #8f98a0;
+    font-size: 20px;
+    background-color: #2a3f5a;
+    border-radius: 5px;
+  }
+  
+  /* 覆盖可能的父容器限制 */
+  #content-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+</style>
+
+<div id="content-container" style="width:100%; max-width:100%;">
+  <div class="community-container">
+    <div class="community-header">
+      <h1>{{ 'Community' if language == 'en' else '社区' }}</h1>
+      <a href="{{ url_for('create_post') }}" class="create-post-btn">{{ 'Create New Post' if language == 'en' else '发布新帖子' }}</a>
+    </div>
+    
+    <div class="posts-list">
+      {% if posts %}
+        {% for post in posts %}
+          <div class="post-item">
+            <div class="post-info">
+              <h2 class="post-title"><a href="{{ url_for('view_post', post_id=post.id) }}">{{ post.title }}</a></h2>
+              <div class="post-meta">
+                <span class="post-author">{{ 'By' if language == 'en' else '作者:' }} {{ post.author.username }}</span>
+                <span class="post-date">{{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                <span class="post-replies">{{ 'Replies' if language == 'en' else '回复:' }} {{ post.replies|length }}</span>
+                {% if post.category %}
+                <span class="post-category">{{ 'Category' if language == 'en' else '分类:' }} {{ post.category }}</span>
+                {% endif %}
+                {% if post.view_count %}
+                <span class="post-views">{{ 'Views' if language == 'en' else '浏览:' }} {{ post.view_count }}</span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="post-preview">
+              {{ post.content|truncate(300) }}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="no-posts">
+          <p>{{ 'No posts yet. Be the first to create a post!' if language == 'en' else '还没有帖子。成为第一个发帖的人吧！' }}</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  // 尝试覆盖父容器的宽度限制
+  document.addEventListener('DOMContentLoaded', function() {
+    // 查找所有可能限制宽度的父容器
+    let parent = document.querySelector('.community-container').parentElement;
+    while (parent && parent !== document.body) {
+      parent.style.maxWidth = '100%';
+      parent.style.width = '100%';
+      parent.style.padding = '0';
+      parent = parent.parentElement;
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Create New Post - Vapor Gaming Platform' if language == 'en' else '发布新帖子 - 蒸汽游戏平台' }}{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+    
+    .create-post-container {
+        max-width: 90%;  /* 使用百分比宽度而不是固定像素 */
+        width: 90%;      /* 确保在各种屏幕上都能占据足够宽度 */
+        margin: 20px auto;
+        padding: 30px;
+        background-color: #1b2838;
+        border-radius: 5px;
+        box-sizing: border-box; /* 确保padding不会增加总宽度 */
+    }
+    
+    .form-group {
+        margin-bottom: 40px;
+        width: 100%;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 15px;
+        font-weight: bold;
+        font-size: 20px;
+    }
+    
+    #title, #content, #category, #tags {
+        width: 100%;
+        padding: 20px;
+        border: 1px solid #2a475e;
+        border-radius: 5px;
+        background-color: #2a3f5a;
+        color: #c7d5e0;
+        font-size: 18px;
+        box-sizing: border-box; /* 确保padding不会增加输入框宽度 */
+    }
+    
+    #content {
+        min-height: 600px; /* 增加高度 */
+        resize: vertical;
+        line-height: 1.8;
+    }
+    
+    .submit-btn {
+        background-color: #66c0f4;
+        color: #fff;
+        border: none;
+        padding: 20px 40px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .submit-btn:hover {
+        background-color: #1999ff;
+    }
+    
+    #cover_image {
+        padding: 15px 0;
+        font-size: 16px;
+        width: 100%;
+    }
+    
+    .form-hint {
+        font-size: 16px;
+        color: #8f98a0;
+        margin-top: 10px;
+    }
+    
+    /* 覆盖可能的父容器限制 */
+    #content-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+</style>
+
+<div id="content-container" style="width:100%; max-width:100%;">
+  <div class="create-post-container">
+    <h1 style="font-size: 32px; margin-bottom: 40px; text-align: center;">{{ 'Create New Post' if language == 'en' else '发布新帖子' }}</h1>
+    
+    <form action="{{ url_for('create_post') }}" method="post" enctype="multipart/form-data" style="width:100%;">
+      <div class="form-group">
+        <label for="title">{{ 'Title' if language == 'en' else '标题' }}</label>
+        <input type="text" id="title" name="title" required placeholder="请输入帖子标题（5-50字）" minlength="5" maxlength="50">
+      </div>
+      
+      <div class="form-group">
+        <label for="category">{{ 'Category' if language == 'en' else '分类' }}</label>
+        <select id="category" name="category" style="width:100%; padding:20px; background-color:#2a3f5a; color:#c7d5e0; border:1px solid #2a475e; border-radius:5px; font-size:18px;">
+          {% for category in categories %}
+            <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="content">{{ 'Content' if language == 'en' else '内容' }}</label>
+        <textarea id="content" name="content" rows="25" required placeholder="请输入帖子内容..."></textarea>
+        <p class="form-hint">支持基本文本格式，请详细描述您想分享的内容</p>
+      </div>
+      
+      <div class="form-group">
+        <label for="tags">{{ 'Tags' if language == 'en' else '标签' }}</label>
+        <input type="text" id="tags" name="tags" placeholder="多个标签请用逗号分隔，如：游戏,攻略,心得">
+        <p class="form-hint">添加标签可以让您的帖子更容易被找到</p>
+      </div>
+      
+      <div class="form-group">
+        <label for="cover_image">{{ 'Cover Image (Optional)' if language == 'en' else '封面图片（可选）' }}</label>
+        <input type="file" id="cover_image" name="cover_image" accept="image/*">
+        <p class="form-hint">支持JPG、PNG格式，建议尺寸800x450像素</p>
+      </div>
+      
+      <div style="text-align: center;">
+        <button type="submit" class="submit-btn">{{ 'Create Post' if language == 'en' else '发布帖子' }}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // 尝试覆盖父容器的宽度限制
+  document.addEventListener('DOMContentLoaded', function() {
+    // 查找所有可能限制宽度的父容器
+    let parent = document.querySelector('.create-post-container').parentElement;
+    while (parent && parent !== document.body) {
+      parent.style.maxWidth = '100%';
+      parent.style.width = '100%';
+      parent.style.padding = '0';
+      parent = parent.parentElement;
+    }
+  });
+</script>
+{% endblock %}

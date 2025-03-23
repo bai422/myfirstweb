@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Vapor Style - Block Breaker Game' if language == 'en' else '蒸汽风格 - 打砖块游戏' }}{% endblock %}
+
+{% block content %}
+<!-- 主要内容区域 -->
+<div class="main-content-area">
+  <div class="content-wrapper">
+    <!-- 左侧边栏 -->
+    <div class="sidebar">
+      <div class="search-box">
+        <input type="text" placeholder="{{ 'Search games...' if language == 'en' else '搜索游戏...' }}">
+        <button type="submit">{{ 'Search' if language == 'en' else '搜索' }}</button>
+      </div>
+      <div class="categories">
+        <h3>{{ 'Discover' if language == 'en' else '发现' }}</h3>
+        <ul>
+          <li class="active"><a href="#">{{ 'New & Trending' if language == 'en' else '新品与热门商品' }}</a></li>
+          <li><a href="#">{{ 'Wishlist' if language == 'en' else '愿望单' }}</a></li>
+          <li><a href="#">{{ 'Special Offers' if language == 'en' else '特别优惠' }}</a></li>
+          <li><a href="#">{{ 'Virtual Reality' if language == 'en' else '虚拟现实' }}</a></li>
+          <li><a href="#">{{ 'Controller Friendly' if language == 'en' else '控制器友好' }}</a></li>
+        </ul>
+      </div>
+      <div class="categories">
+        <h3>{{ 'Categories' if language == 'en' else '分类' }}</h3>
+        <ul>
+          <li><a href="#">{{ 'Free to Play' if language == 'en' else '免费游玩' }}</a></li>
+          <li><a href="#">{{ 'Casual' if language == 'en' else '休闲' }}</a></li>
+          <li><a href="#">{{ 'Sports' if language == 'en' else '体育' }}</a></li>
+          <li><a href="#">{{ 'Adventure' if language == 'en' else '冒险' }}</a></li>
+          <li><a href="#">{{ 'Action' if language == 'en' else '动作' }}</a></li>
+          <li><a href="#">{{ 'Indie' if language == 'en' else '独立' }}</a></li>
+          <li><a href="#">{{ 'Strategy' if language == 'en' else '策略' }}</a></li>
+          <li><a href="#">{{ 'RPG' if language == 'en' else '角色扮演' }}</a></li>
+          <li><a href="#">{{ 'Simulation' if language == 'en' else '模拟' }}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 游戏内容区域 -->
+    <div class="game-content">
+      <div class="game-header">
+        <h1>{{ 'Block Breaker' if language == 'en' else '打砖块' }}</h1>
+        <div class="game-meta">
+          <span class="developer">{{ 'Developer: ' if language == 'en' else '开发商: ' }}弦云孤赫(David Yang)</span>
+          <span class="release-date">{{ 'Release Date: ' if language == 'en' else '发布日期: ' }}2018年1月11日</span>
+          <div class="tags">
+            <span class="tag">{{ 'Casual' if language == 'en' else '休闲' }}</span>
+            <span class="tag">{{ 'Action' if language == 'en' else '动作' }}</span>
+            <span class="tag">{{ 'Indie' if language == 'en' else '独立' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 游戏介绍 -->
+      <div class="game-description">
+        <p>{{ 'Block Breaker is a classic arcade game where you control a paddle to bounce a ball and break blocks. Clear all blocks to advance to the next level.' if language == 'en' else '打砖块是一款经典街机游戏，你需要控制挡板反弹小球并打破砖块。清除所有砖块即可进入下一关卡。' }}</p>
+        <div class="instructions">
+          {{ 'Use left and right arrow keys to move; Space to launch the ball and start the game; P to pause; N to enter next level after completion.' if language == 'en' else '使用左右方向键，进行移动；空格键发射小球并开始游戏，游戏结束时按空格键重置游戏；P 键暂停游戏；通关游戏后，按 N 键可进入下一关卡' }}
+        </div>
+        <div class="more-games">
+          <a href="{{ url_for('games_list') }}" class="more-games-btn">
+            {{ 'More Games' if language == 'en' else '更多游戏' }} →
+          </a>
+        </div>
+      </div>
+
+      <!-- 游戏画面 -->
+      <div class="game-screenshots">
+        <div class="game-iframe-container">
+          <iframe src="{{ url_for('static', filename='index.html') }}" frameborder="0" class="game-iframe" style="width: 100%; height: 600px;"></iframe>
+        </div>
+      </div>
+
+      <!-- 评论区域 -->
+      <div class="reviews-section">
+        <h2>{{ 'User Reviews' if language == 'en' else '用户评测' }}</h2>
+        <div class="review-summary">
+          <span id="review-count">{{ 'Loading...' if language == 'en' else '加载中...' }}</span>
+        </div>
+
+        {% if 'user_id' in session %}
+          <div class="write-review">
+            <h3>{{ 'Write a Review' if language == 'en' else '发表评测' }}</h3>
+            <form id="comment-form" action="{{ url_for('add_comment') }}" method="post">
+              <div class="form-group">
+                <label for="rating">{{ 'Rating' if language == 'en' else '评分' }}</label>
+                <select id="rating" name="rating" required>
+                  <option value="5">5 - {{ 'Excellent' if language == 'en' else '非常好' }}</option>
+                  <option value="4">4 - {{ 'Good' if language == 'en' else '很好' }}</option>
+                  <option value="3">3 - {{ 'Average' if language == 'en' else '一般' }}</option>
+                  <option value="2">2 - {{ 'Poor' if language == 'en' else '较差' }}</option>
+                  <option value="1">1 - {{ 'Very Poor' if language == 'en' else '很差' }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="content">{{ 'Review Content' if language == 'en' else '评测内容' }}</label>
+                <textarea id="content" name="content" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="submit-btn">{{ 'Post Review' if language == 'en' else '发布评测' }}</button>
+            </form>
+          </div>
+        {% else %}
+          <div class="login-to-review">
+            <p>{{ 'Please ' if language == 'en' else '请' }}<a href="{{ url_for('login') }}">{{ 'login' if language == 'en' else '登录' }}</a>{{ ' to post a review' if language == 'en' else '后发表评测' }}</p>
+          </div>
+        {% endif %}
+
+        <div id="comments-container" class="reviews-list">
+          <!-- 评论将通过JavaScript动态加载 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* 修复布局，使侧边栏和游戏内容左右排列 */
+  .content-wrapper {
+    display: flex;
+    flex-direction: row;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    margin-right: 20px;
+    background-color: var(--steam-bg-darker);
+    padding: 15px;
+    border-radius: 4px;
+  }
+  
+  .game-content {
+    flex-grow: 1;
+    background-color: var(--steam-bg-light);
+    padding: 20px;
+    border-radius: 4px;
+  }
+  
+  /* 确保游戏iframe容器有合适的尺寸 */
+  .game-iframe-container {
+    margin: 20px 0;
+    background-color: #000;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .game-iframe {
+    display: block;
+    border: none;
+    width: 100%;
+    height: 600px;
+  }
+  
+  /* 响应式布局 */
+  @media (max-width: 768px) {
+    .content-wrapper {
+      flex-direction: column;
+    }
+    
+    .sidebar {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .more-games {
+    margin-top: 20px;
+    text-align: right;
+  }
+  
+  .more-games-btn {
+    display: inline-block;
+    background-color: var(--steam-accent);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .more-games-btn:hover {
+    background-color: var(--steam-accent-hover);
+  }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // 处理评论提交
+  document.addEventListener('DOMContentLoaded', function() {
+    const commentForm = document.getElementById('comment-form');
+    if (commentForm) {
+      commentForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(commentForm);
+        fetch('{{ url_for("add_comment") }}', {
+          method: 'POST',
+          body: formData,
+          credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            loadComments(); // 重新加载评论
+            commentForm.reset();
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('评论提交失败，请稍后重试');
+        });
+      });
+    }
+
+    // 加载评论
+    function loadComments() {
+      const commentsContainer = document.getElementById('comments-container');
+      if (commentsContainer) {
+        fetch('{{ url_for("get_comments") }}')
+          .then(response => response.json())
+          .then(comments => {
+            commentsContainer.innerHTML = '';
+            comments.forEach(comment => {
+              const ratingClass = comment.rating >= 3 ? 'positive' : 'negative';
+              const ratingText = comment.rating >= 3 ? '{{ "Recommended" if language == "en" else "推荐" }}' : '{{ "Not Recommended" if language == "en" else "不推荐" }}';
+              
+              const commentHtml = `
+                <div class="review-item">
+                  <div class="review-header">
+                    <img src="${comment.avatar}" alt="${comment.username}" class="avatar">
+                    <div class="review-info">
+                      <div class="username">${comment.username}</div>
+                      <div class="review-stats">
+                        <span class="review-date">{{ "Posted on: " if language == "en" else "发布于: " }}${comment.created_at}</span>
+                        <span class="playtime">{{ "Rating: " if language == "en" else "评分: " }}${comment.rating}/5</span>
+                      </div>
+                    </div>
+                    <div class="review-rating ${ratingClass}">${ratingText}</div>
+                  </div>
+                  <div class="review-content">
+                    <p>${comment.content}</p>
+                  </div>
+                </div>
+              `;
+              
+              commentsContainer.innerHTML += commentHtml;
+            });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            commentsContainer.innerHTML = '<p class="error">{{ "Failed to load comments, please try again later" if language == "en" else "加载评论失败，请稍后再试" }}</p>';
+          });
+      }
+    }
+
+    // 页面加载时自动加载评论
+    loadComments();
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注册 - STEAM风格游戏平台</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/steam-style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+  <div class="steam-container">
+    <!-- 顶部导航栏 -->
+    <header class="steam-header">
+      <div class="header-content">
+        <div class="logo">STEAM游戏平台</div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="{{ url_for('index') }}">商店</a></li>
+            <li><a href="#">社区</a></li>
+            <li><a href="#">关于</a></li>
+            <li><a href="#">支持</a></li>
+          </ul>
+        </nav>
+        <div class="user-actions">
+          <a href="#" class="install-btn">安装 Steam</a>
+          <a href="{{ url_for('login') }}" class="login-btn">登录</a>
+          <span class="language">语言</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 消息提示 -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for message in messages %}
+            <div class="flash-message">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- 主要内容区域 -->
+    <div class="auth-content">
+      <div class="auth-box">
+        <h1>创建账号</h1>
+        <form action="{{ url_for('register') }}" method="post">
+          <div class="form-group">
+            <label for="username">用户名</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="email">电子邮箱</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="submit-btn">创建账号</button>
+          </div>
+        </form>
+        <div class="auth-links">
+          <p>已有账号？<a href="{{ url_for('login') }}">立即登录</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="steam-footer">
+      <div class="footer-content">
+        <div class="footer-logo">STEAM游戏平台</div>
+        <div class="footer-legal">
+          <p>© 2023 Valve Corporation. 保留所有权利。所有商标均为其在美国及其它国家/地区的各自持有者所有。</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+/* 认证页面样式 */
+.auth-content {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.auth-box {
+  background-color: var(--steam-bg-light);
+  border-radius: 4px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.auth-box h1 {
+  color: var(--steam-text-light);
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: var(--steam-text);
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--steam-border);
+  background-color: var(--steam-bg-dark);
+  color: var(--steam-text-light);
+  border-radius: 2px;
+}
+
+.form-group input:focus {
+  border-color: var(--steam-accent);
+  outline: none;
+}
+
+.form-actions {
+  margin-top: 30px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--steam-accent);
+  color: var(--steam-text-light);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-btn:hover {
+  background-color: var(--steam-accent-hover);
+}
+
+.auth-links {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--steam-text-dim);
+}
+
+.auth-links a {
+  color: var(--steam-accent);
+}
+
+.auth-links a:hover {
+  color: var(--steam-accent-hover);
+}
+
+.flash-messages {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.flash-message {
+  background-color: var(--steam-bg-light);
+  color: var(--steam-text-light);
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}

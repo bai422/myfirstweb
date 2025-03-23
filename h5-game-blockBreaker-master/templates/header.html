@@ -1,0 +1,26 @@
+<style>
+  .games-link {
+    position: relative;
+  }
+  
+  .games-link::after {
+    content: "{{ 'NEW' if language == 'en' else '新' }}";
+    position: absolute;
+    top: -8px;
+    right: -15px;
+    background-color: #5c7e10;
+    color: white;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 10px;
+  }
+</style>
+
+<nav>
+  <ul>
+    <li><a href="{{ url_for('index') }}">{{ 'Home' if language == 'en' else '首页' }}</a></li>
+    <li class="games-link"><a href="{{ url_for('games_list') }}">{{ 'Games' if language == 'en' else '游戏' }}</a></li>
+    <li><a href="{{ url_for('community') }}">{{ 'Community' if language == 'en' else '社区' }}</a></li>
+    <!-- 其他导航项 -->
+  </ul>
+</nav> 
